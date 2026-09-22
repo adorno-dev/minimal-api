@@ -1,4 +1,5 @@
 using Minimal.API.Endpoints;
+using Minimal.API.Features.Authorization;
 using Minimal.API.Features.General;
 using Minimal.API.Services;
 using Minimal.API.Settings;
@@ -33,10 +34,11 @@ app.MapTwoFactorEndpoints();
 app.MapExternalGoogleEndpoints();
 app.MapExternalMicrosoftEndpoints();
 app.MapExternalFacebookEndpoints();
-app.MapRoleEndpoints();
-app.MapClaimEndpoints();
-// app.MapDefaultEndpoints();
+// app.MapRoleEndpoints();
+// app.MapClaimEndpoints();
+app.MapAuthorizationEndpoints();
 
+// app.MapDefaultEndpoints();
 app.MapGeneralEndpoints();
 
 app.Run();
