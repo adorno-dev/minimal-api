@@ -5,6 +5,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Minimal.API.Data;
+using Minimal.API.Features.Shared.Contracts;
 using Minimal.API.Models;
 using Minimal.API.Services;
 

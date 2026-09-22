@@ -6,19 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Minimal.API.Data;
+using Minimal.API.Features.Shared.Contracts;
 using Minimal.API.Models;
 
 namespace Minimal.API.Services;
-
-#region +Responses
-
-public sealed record TokenResponse
-(
-    string AccessToken,
-    string RefreshToken
-);
-
-#endregion
 
 internal class TokenService(IConfiguration configuration)
 {
