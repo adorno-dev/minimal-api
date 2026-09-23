@@ -7,44 +7,30 @@ using Minimal.API.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.ConfigureResendSettings();
-builder.ConfigureHstsSettings();
-builder.ConfigureDatabaseSettings();
-builder.ConfigureIdentitySettings();
-builder.ConfigureJwtSettings();
-builder.ConfigureCorsSettings();
-builder.ConfigureOpenApiSettings();
+builder.ConfigureResendSettings()
+       .ConfigureHstsSettings()
+       .ConfigureDatabaseSettings()
+       .ConfigureIdentitySettings()
+       .ConfigureJwtSettings()
+       .ConfigureCorsSettings()
+       .ConfigureOpenApiSettings();
 
-builder.Services.AddValidation();
-builder.Services.AddAuthorization();
-
-builder.Services.AddScoped<EmailService>();
-builder.Services.AddScoped<TokenService>();
+builder.Services.AddValidation()
+                .AddAuthorization()
+                .AddScoped<EmailService>()
+                .AddScoped<TokenService>();
 
 var app = builder.Build();
 
-app.UseOpenApiSettings();
-app.UseHstsSettings();
-app.UseCorsSettings();
-app.UseHttpsRedirection();
-app.UseAuthentication()
+app.UseOpenApiSettings()
+   .UseHstsSettings()
+   .UseCorsSettings()
+   .UseHttpsRedirection()
+   .UseAuthentication()
    .UseAuthorization();
 
-// app.MapAuthenticationEndpoints();
-
-// app.MapExternalGoogleEndpoints();
-// app.MapExternalMicrosoftEndpoints();
-// app.MapExternalFacebookEndpoints();
-app.MapAuthenticationEndpoints();
-
-// app.MapTwoFactorEndpoints();
-// app.MapTwoFactorEndpoints();
-
-// app.MapRoleEndpoints();
-// app.MapClaimEndpoints();
-app.MapAuthorizationEndpoints();
-
-// app.MapDefaultEndpoints();
-app.MapGeneralEndpoints();
+app.MapAuthenticationEndpoints()
+   .MapAuthorizationEndpoints()
+   .MapGeneralEndpoints();
 
 app.Run();
