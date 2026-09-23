@@ -4,7 +4,7 @@ using Minimal.API.Features.Shared.Contracts;
 using Minimal.API.Features.Shared.Extensions;
 using Minimal.API.Models;
 
-namespace Minimal.API.Features.TwoFactor.Enable;
+namespace Minimal.API.Features.Authentication.TwoFactor.Enable;
 
 public static class EnableEndpoint
 {

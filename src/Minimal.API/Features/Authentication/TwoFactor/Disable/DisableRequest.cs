@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Minimal.API.Features.TwoFactor.Disable;
+namespace Minimal.API.Features.Authentication.TwoFactor.Disable;
 
 public sealed record DisableRequest
 (

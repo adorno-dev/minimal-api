@@ -1,7 +1,7 @@
 
+using Minimal.API.Features.Authentication;
 using Minimal.API.Features.Authorization;
 using Minimal.API.Features.General;
-using Minimal.API.Features.TwoFactor;
 using Minimal.API.Services;
 using Minimal.API.Settings;
 
@@ -31,12 +31,14 @@ app.UseAuthentication()
    .UseAuthorization();
 
 // app.MapAuthenticationEndpoints();
+
 // app.MapExternalGoogleEndpoints();
 // app.MapExternalMicrosoftEndpoints();
 // app.MapExternalFacebookEndpoints();
+app.MapAuthenticationEndpoints();
 
 // app.MapTwoFactorEndpoints();
-app.MapTwoFactorEndpoints();
+// app.MapTwoFactorEndpoints();
 
 // app.MapRoleEndpoints();
 // app.MapClaimEndpoints();

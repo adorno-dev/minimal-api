@@ -1,4 +1,4 @@
-namespace Minimal.API.Features.TwoFactor.Setup;
+namespace Minimal.API.Features.Authentication.TwoFactor.Setup;
 
 internal static class AuthenticatorUriGenerator
 {

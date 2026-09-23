@@ -1,4 +1,4 @@
-namespace Minimal.API.Features.TwoFactor.Enable;
+namespace Minimal.API.Features.Authentication.TwoFactor.Enable;
 
 public sealed record EnableResponse
 (

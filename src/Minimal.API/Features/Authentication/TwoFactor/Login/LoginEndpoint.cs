@@ -4,7 +4,7 @@ using Minimal.API.Features.Shared.Contracts;
 using Minimal.API.Models;
 using Minimal.API.Services;
 
-namespace Minimal.API.Features.TwoFactor.Login;
+namespace Minimal.API.Features.Authentication.TwoFactor.Login;
 
 public static class LoginEndpoint
 {

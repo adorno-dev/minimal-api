@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Minimal.API.Features.Shared.Extensions;
 using Minimal.API.Models;
 
-namespace Minimal.API.Features.TwoFactor.Disable;
+namespace Minimal.API.Features.Authentication.TwoFactor.Disable;
 
 public static class DisableEndpoint
 {

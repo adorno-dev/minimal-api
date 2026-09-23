@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Minimal.API.Features.TwoFactor.Login;
+namespace Minimal.API.Features.Authentication.Login;
 
 public sealed record LoginRequest
 (
@@ -9,5 +9,5 @@ public sealed record LoginRequest
     string Email,
 
     [Required]
-    string Code
+    string Password
 );

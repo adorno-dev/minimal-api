@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Minimal.API.Models;
 
-namespace Minimal.API.Features.TwoFactor.RecoveryCodes;
+namespace Minimal.API.Features.Authentication.TwoFactor.RecoveryCodes;
 
 public static class RecoveryCodesEndpoint
 {

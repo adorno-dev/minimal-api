@@ -14,51 +14,6 @@ namespace Minimal.API.Endpoints;
 
 #region +Requests
 
-public sealed record LoginRequest
-(
-    [Required]
-    [EmailAddress]
-    string Email,
-
-    [Required]
-    string Password
-);
-
-public sealed record RegisterRequest
-(
-    [Required]
-    [MinLength(3)]
-    [MaxLength(30)]
-    string Username,
-
-    [Required]
-    [EmailAddress]
-    string Email,
-
-    [Required]
-    string Password,
-
-    [Required]
-    string ConfirmPassword
-
-) : IValidatableObject
-{
-    public IEnumerable<ValidationResult>
-    Validate(
-        ValidationContext validationContext)
-    {
-        if (Password != ConfirmPassword)
-        {
-            yield return new ValidationResult(
-                new CompareAttribute(
-                    nameof(Password))
-                    .FormatErrorMessage(
-                        nameof(ConfirmPassword)),
-                [nameof(ConfirmPassword)]);
-        }
-    }
-}
-
 public sealed record RefreshTokenRequest
 (
     [Required]
@@ -186,16 +141,6 @@ public sealed record UpdateProfileRequest
 
 #endregion
 
-#region +Responses
-
-// public sealed record TokenResponse
-// (
-//     string AccessToken,
-//     string RefreshToken
-// );
-
-#endregion
-
 public static class AuthenticationEndpoints
 {
     public static WebApplication MapAuthenticationEndpoints(this WebApplication app)
@@ -236,115 +181,6 @@ public static class AuthenticationEndpoints
         }
 
         #endregion
-
-        app.MapPost("/auth/login", async (
-            TokenService tokenService,
-            LoginRequest request,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            MinimalDbContext context) =>
-        {
-            var user = await userManager.FindByEmailAsync(request.Email);
-
-            if (user is null)
-                return Results.Unauthorized();
-
-            // DEVELOPMENT ONLY: bypass email confirmation (DELETE BEFORE PRODUCTION)
-            user.EmailConfirmed = true;
-
-            var result = await signInManager.CheckPasswordSignInAsync(
-                user,
-                request.Password,
-                lockoutOnFailure: true);
-
-            if (!result.Succeeded)
-                return Results.Unauthorized();
-
-            if (await userManager.GetTwoFactorEnabledAsync(user))
-            {
-                return Results.Ok(
-                    new TwoFactorLoginResponse(
-                        RequiresTwoFactor: true,
-                        AccessToken: null,
-                        RefreshToken: null));
-            }
-
-            var tokens = await tokenService.CreateTokenResponse(
-                user,
-                context,
-                userManager);
-
-            return Results.Ok(
-                new TwoFactorLoginResponse(
-                    RequiresTwoFactor: false,
-                    AccessToken: tokens.AccessToken,
-                    RefreshToken: tokens.RefreshToken));
-        })
-        .WithTags("Authentication")
-        .WithSummary("Authenticate a user")
-        .WithDescription(
-            "Validates the user's credentials and returns access and refresh tokens. " +
-            "If two-factor authentication is enabled, the response indicates that " +
-            "a second authentication factor is required.")
-        .Produces<TwoFactorLoginResponse>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status401Unauthorized);
-
-        app.MapPost("/auth/register", async (
-            TokenService tokenService,
-            RegisterRequest request,
-            UserManager<User> userManager,
-            EmailService emailSender,
-            MinimalDbContext context) =>
-        {
-            var user = new User
-            {
-                UserName = request.Username,
-                Email = request.Email
-            };
-
-            var result = await userManager.CreateAsync(
-                user,
-                request.Password);
-
-            if (!result.Succeeded)
-            {
-                return Results.ValidationProblem(
-                    result.Errors
-                        .GroupBy(error => error.Code)
-                        .ToDictionary(
-                            group => group.Key,
-                            group => group
-                                .Select(error => error.Description)
-                                .ToArray()));
-            }
-
-            var token =
-                await userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            var confirmationUrl =
-                $"{appBaseUrl}/auth/confirm-email" +
-                $"?userId={Uri.EscapeDataString(user.Id.ToString())}" +
-                $"&token={Uri.EscapeDataString(token)}";
-
-            // await emailSender.SendAsync(
-            //     user.Email!,
-            //     "Confirm your email",
-            //     $"<p>Click <a href=\"{confirmationUrl}\">here</a> to confirm your email.</p>");
-
-            return Results.Created(
-                $"/users/{user.Id}",
-                await tokenService.CreateTokenResponse(
-                    user,
-                    context,
-                    userManager));
-        })
-        .WithTags("Authentication")
-        .WithSummary("Register a new user")
-        .WithDescription(
-            "Creates a new user account, sends an email confirmation message, " +
-            "and returns access and refresh tokens.")
-        .Produces<TokenResponse>(StatusCodes.Status201Created)
-        .ProducesValidationProblem(StatusCodes.Status400BadRequest);
 
         app.MapPost("/auth/refresh", async (
             TokenService tokenService,

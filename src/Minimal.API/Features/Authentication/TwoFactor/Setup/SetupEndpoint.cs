@@ -2,7 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Minimal.API.Models;
 
-namespace Minimal.API.Features.TwoFactor.Setup;
+namespace Minimal.API.Features.Authentication.TwoFactor.Setup;
 
 public static class SetupEndpoint
 {
