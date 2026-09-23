@@ -8,7 +8,7 @@ public static class AssignRoleEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/users/{userId:guid}/roles/{roleName}", Handle)
+        app.MapPost("/auth/users/{userId:guid}/roles/{roleName}", HandleAsync)
            .WithTags("Roles")
            .WithSummary("Assign role to user")
            .WithDescription("Assigns an existing Identity role to the specified user.")
@@ -20,7 +20,7 @@ public static class AssignRoleEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         string roleName,
         [FromServices] UserManager<User> userManager,

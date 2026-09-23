@@ -10,12 +10,12 @@ public static class MicrosoftCallbackEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/microsoft/callback", Handle)
+        app.MapGet("/auth/external/microsoft/callback", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Complete Microsoft authentication");
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         string code,
         string state,
         TokenService tokenService,

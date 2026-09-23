@@ -8,7 +8,7 @@ public static class GetClaimsEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/users/{userId:guid}/claims", Handle)
+        app.MapGet("/auth/users/{userId:guid}/claims", HandleAsync)
            .WithTags("Claims")
            .WithSummary("Get user claims")
            .WithDescription("Returns all custom Identity claims assigned to the specified user.")
@@ -17,7 +17,7 @@ public static class GetClaimsEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         [FromServices] UserManager<User> userManager)
     {

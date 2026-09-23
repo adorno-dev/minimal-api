@@ -10,7 +10,7 @@ public static class LoginEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/login", Handle)
+        app.MapPost("/auth/login", HandleAsync)
         .WithTags("Authentication")
         .WithSummary("Authenticate a user")
         .WithDescription(
@@ -21,7 +21,7 @@ public static class LoginEndpoint
         .Produces(StatusCodes.Status401Unauthorized);
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         TokenService tokenService,
         LoginRequest request,
         UserManager<User> userManager,

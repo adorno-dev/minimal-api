@@ -10,7 +10,7 @@ public static class LoginEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/2fa/login", Handle)
+        app.MapPost("/auth/2fa/login", HandleAsync)
            .WithTags("Two-Factor Authentication")
            .WithSummary("Complete two-factor login")
            .WithDescription(
@@ -21,7 +21,7 @@ public static class LoginEndpoint
            .Produces(StatusCodes.Status401Unauthorized);
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         TokenService tokenService,
         LoginRequest request,
         UserManager<User> userManager,

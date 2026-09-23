@@ -9,7 +9,7 @@ public static class DisableEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/2fa/disable", Handle)
+        app.MapPost("/auth/2fa/disable", HandleAsync)
            .WithTags("Two-Factor Authentication")
            .WithSummary("Disable two-factor authentication")
            .WithDescription(
@@ -23,7 +23,7 @@ public static class DisableEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         DisableRequest request,
         ClaimsPrincipal principal,
         UserManager<User> userManager)

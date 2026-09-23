@@ -10,7 +10,7 @@ public static class EnableEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/2fa/enable", Handle)
+        app.MapPost("/auth/2fa/enable", HandleAsync)
            .WithTags("Two-Factor Authentication")
            .WithSummary("Enable two-factor authentication")
            .WithDescription(
@@ -24,7 +24,7 @@ public static class EnableEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         TwoFactorCodeRequest request,
         ClaimsPrincipal principal,
         UserManager<User> userManager)

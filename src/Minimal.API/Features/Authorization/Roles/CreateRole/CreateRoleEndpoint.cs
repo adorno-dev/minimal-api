@@ -7,7 +7,7 @@ public static class CreateRoleEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/roles", Handle)
+        app.MapPost("/auth/roles", HandleAsync)
            .WithTags("Roles")
            .WithSummary("Create a role")
            .WithDescription("Creates a new Identity role.")
@@ -17,7 +17,7 @@ public static class CreateRoleEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         [FromBody] CreateRoleRequest request,
         [FromServices] RoleManager<IdentityRole<Guid>> roleManager)
     {

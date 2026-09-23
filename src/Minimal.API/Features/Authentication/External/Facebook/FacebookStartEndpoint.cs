@@ -7,12 +7,12 @@ public static class FacebookStartEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/facebook", Handle)
+        app.MapGet("/auth/external/facebook", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Authenticate with Facebook");
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         IConfiguration config,
         MinimalDbContext context)
     {

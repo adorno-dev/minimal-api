@@ -11,12 +11,12 @@ public static class FacebookCallbackEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/facebook/callback", Handle)
+        app.MapGet("/auth/external/facebook/callback", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Complete Facebook authentication");
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
             string code,
             string state,
             TokenService tokenService,

@@ -7,12 +7,12 @@ public static class MicrosoftStartEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/microsoft", Handle)
+        app.MapGet("/auth/external/microsoft", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Authenticate with Microsoft");
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         IConfiguration config,
         MinimalDbContext context)
     {

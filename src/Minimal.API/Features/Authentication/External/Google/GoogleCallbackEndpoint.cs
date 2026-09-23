@@ -11,7 +11,7 @@ public static class GoogleCallbackEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/google/callback", Handle)
+        app.MapGet("/auth/external/google/callback", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Complete Google authentication")
         .WithDescription("Processes the Google authentication callback, resolves or creates the corresponding Identity user, and issues an access token and refresh token.")
@@ -20,7 +20,7 @@ public static class GoogleCallbackEndpoint
         .Produces(StatusCodes.Status401Unauthorized);
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         string code,
         string state,
         TokenService tokenService,

@@ -7,13 +7,13 @@ public static class GoogleStartEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/external/google", Handle)
+        app.MapGet("/auth/external/google", HandleAsync)
         .WithTags("External Authentication")
         .WithSummary("Authenticate with Google")
         .WithDescription("Redirects the user to Google for authentication.");
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         IConfiguration config,
         MinimalDbContext context)
     {

@@ -8,7 +8,7 @@ public static class SetupEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/2fa/setup", Handle)
+        app.MapPost("/auth/2fa/setup", HandleAsync)
            .WithTags("Two-Factor Authentication")
            .WithSummary("Set up authenticator")
            .WithDescription(
@@ -22,7 +22,7 @@ public static class SetupEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         ClaimsPrincipal principal,
         UserManager<User> userManager)
     {

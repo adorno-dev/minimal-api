@@ -8,7 +8,7 @@ public static class RecoveryCodesEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/2fa/recovery-codes", Handle)
+        app.MapPost("/auth/2fa/recovery-codes", HandleAsync)
            .WithTags("Two-Factor Authentication")
            .WithSummary("Generate recovery codes")
            .WithDescription(
@@ -21,7 +21,7 @@ public static class RecoveryCodesEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         ClaimsPrincipal principal,
         UserManager<User> userManager)
     {

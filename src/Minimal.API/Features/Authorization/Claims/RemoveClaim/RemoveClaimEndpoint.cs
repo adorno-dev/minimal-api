@@ -9,7 +9,7 @@ public static class RemoveClaimEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/auth/users/{userId:guid}/claims", Handle)
+        app.MapDelete("/auth/users/{userId:guid}/claims", HandleAsync)
            .WithTags("Claims")
            .WithSummary("Remove claim from user")
            .WithDescription("Removes a custom Identity claim from the specified user.")
@@ -19,7 +19,7 @@ public static class RemoveClaimEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         [FromBody] RemoveClaimRequest request,
         [FromServices] UserManager<User> userManager)

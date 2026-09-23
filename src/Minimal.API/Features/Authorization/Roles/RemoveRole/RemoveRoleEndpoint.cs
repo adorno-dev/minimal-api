@@ -8,7 +8,7 @@ public static class RemoveRoleEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/auth/users/{userId:guid}/roles/{roleName}", Handle)
+        app.MapDelete("/auth/users/{userId:guid}/roles/{roleName}", HandleAsync)
            .WithTags("Roles")
            .WithSummary("Remove role from user")
            .WithDescription("Removes an Identity role from the specified user.")
@@ -19,7 +19,7 @@ public static class RemoveRoleEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         string roleName,
         [FromServices] UserManager<User> userManager)

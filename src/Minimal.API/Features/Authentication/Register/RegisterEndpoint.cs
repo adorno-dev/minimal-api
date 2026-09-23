@@ -10,7 +10,7 @@ public static class RegisterEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/register", Handle)
+        app.MapPost("/auth/register", HandleAsync)
         .WithTags("Authentication")
         .WithSummary("Register a new user")
         .WithDescription(
@@ -20,7 +20,7 @@ public static class RegisterEndpoint
         .ProducesValidationProblem(StatusCodes.Status400BadRequest);
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         IConfiguration configuration,
         TokenService tokenService,
         RegisterRequest request,

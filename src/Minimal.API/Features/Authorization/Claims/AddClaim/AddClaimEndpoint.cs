@@ -9,7 +9,7 @@ public static class AddClaimEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapPost("/auth/users/{userId:guid}/claims", Handle)
+        app.MapPost("/auth/users/{userId:guid}/claims", HandleAsync)
            .WithTags("Claims")
            .WithSummary("Add claim to user")
            .WithDescription("Adds a custom Identity claim to the specified user.")
@@ -19,7 +19,7 @@ public static class AddClaimEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         [FromBody] AddClaimRequest request,
         [FromServices] UserManager<User> userManager)

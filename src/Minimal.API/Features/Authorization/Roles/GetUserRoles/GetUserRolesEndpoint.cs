@@ -8,7 +8,7 @@ public static class GetUserRolesEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     {
-        app.MapGet("/auth/users/{userId:guid}/roles", Handle)
+        app.MapGet("/auth/users/{userId:guid}/roles", HandleAsync)
            .WithTags("Roles")
            .WithSummary("Get user roles")
            .WithDescription("Returns all Identity roles assigned to the specified user.")
@@ -17,7 +17,7 @@ public static class GetUserRolesEndpoint
            .RequireAuthorization();
     }
 
-    private static async Task<IResult> Handle(
+    private static async Task<IResult> HandleAsync(
         Guid userId,
         [FromServices] UserManager<User> userManager)
     {
