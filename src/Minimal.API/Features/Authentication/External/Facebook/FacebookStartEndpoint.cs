@@ -40,7 +40,8 @@ public static class FacebookStartEndpoint
             $"client_id={Uri.EscapeDataString(clientId)}" +
             $"&redirect_uri={Uri.EscapeDataString(redirectUri)}" +
             $"&response_type=code" +
-            $"&scope=email" +
+            // $"&scope=email" +
+            $"&scope=email,pages_show_list,pages_manage_posts,pages_read_engagement" +
             $"&state={Uri.EscapeDataString(state)}";
 
         return Results.Redirect(authUrl);
